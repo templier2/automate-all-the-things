@@ -17,6 +17,8 @@ terraform {
     container_name       = "terraform-state"
     key                  = "automate-all-the-things.tfstate"
     use_azuread_auth     = true
+    use_oidc             = true
+    use_msi              = true
   }
 }
 
