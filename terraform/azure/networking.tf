@@ -1,3 +1,9 @@
+resource "azurerm_resource_group" "automation" {
+  name     = "${var.resource_group_name}-${var.username}"
+  location = var.location
+  tags     = var.tags
+}
+
 resource "azurerm_virtual_network" "automation" {
   name                = "automation-${var.username}"
   location            = azurerm_resource_group.automation.location
@@ -12,6 +18,13 @@ resource "azurerm_subnet" "internal_aks" {
   virtual_network_name = azurerm_virtual_network.automation.name
   address_prefixes     = ["${cidrsubnet(one(azurerm_virtual_network.automation.address_space), 8, 0)}"]
 }
+
+# resource "azurerm_subnet" "redis" {
+#   name                 = "private-redis-${var.username}"
+#   resource_group_name  = azurerm_resource_group.automation.name
+#   virtual_network_name = azurerm_virtual_network.automation.name
+#   address_prefixes     = ["${cidrsubnet(one(azurerm_virtual_network.automation.address_space), 8, 1)}"]
+# }
 
 resource "azurerm_network_security_group" "internal_aks" {
   name                = "private-automation-${var.username}"
@@ -31,10 +44,15 @@ resource "azurerm_network_security_group" "internal_aks" {
   }
 }
 
-resource "azurerm_subnet_network_security_group_association" "automation" {
+resource "azurerm_subnet_network_security_group_association" "internal_aks" {
   subnet_id                 = azurerm_subnet.internal_aks.id
   network_security_group_id = azurerm_network_security_group.internal_aks.id
 }
+
+# resource "azurerm_subnet_network_security_group_association" "redis" {
+#   subnet_id                 = azurerm_subnet.redis.id
+#   network_security_group_id = azurerm_network_security_group.internal_aks.id
+# }
 
 resource "azurerm_public_ip" "nat" {
   name                = "automation-nat-${var.username}"

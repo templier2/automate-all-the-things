@@ -1,5 +1,6 @@
 variable "location" {
   description = "place for your resources"
+  default     = "East US"
   type        = string
 }
 
