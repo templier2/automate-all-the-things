@@ -43,14 +43,14 @@ resource "azurerm_public_ip" "nat" {
   allocation_method   = "Static"
   sku                 = "Standard"
   tags                = var.tags
-  zones               = ["1", "2", "3"]
+  zones               = ["1"]
 }
 
 resource "azurerm_nat_gateway" "automation" {
   name                = "automation-${var.username}"
   location            = azurerm_resource_group.automation.location
   resource_group_name = azurerm_resource_group.automation.name
-  zones               = ["1", "2", "3"]
+  zones               = ["1"]
   tags                = var.tags
 }
 

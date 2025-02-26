@@ -10,7 +10,7 @@ resource "azurerm_kubernetes_cluster" "automation" {
   resource_group_name       = azurerm_resource_group.automation.name
   dns_prefix                = "automationaks1"
   automatic_upgrade_channel = "stable"
-  kubernetes_version        = "1.27"
+  kubernetes_version        = "1.30"
   tags                      = var.tags
 
   http_application_routing_enabled = true
