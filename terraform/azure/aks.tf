@@ -30,9 +30,9 @@ resource "azurerm_kubernetes_cluster" "automation" {
     type = "SystemAssigned"
   }
 
-  network_profile {
-    network_plugin = "azure"
-  }
+  # network_profile {
+  #   network_plugin = "azure"
+  # }
 }
 
 output "client_certificate" {
