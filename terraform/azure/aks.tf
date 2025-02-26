@@ -1,3 +1,7 @@
+locals {
+  aks_service_cidr = cidrsubnet(one(azurerm_virtual_network.automation.address_space), 8, 1)
+}
+
 resource "azurerm_resource_group" "automation" {
   name     = "${var.resource_group_name}-${var.username}"
   location = var.location
@@ -32,8 +36,8 @@ resource "azurerm_kubernetes_cluster" "automation" {
 
   network_profile {
     network_plugin = "azure"
-    service_cidr   = cidrsubnet(one(azurerm_virtual_network.automation.address_space), 8, 1)
-    # dns_service_ip = cidrsubnet(one(azurerm_virtual_network.automation.address_space), 8, 1)
+    service_cidr   = local.aks_service_cidr
+    dns_service_ip = cidrhost(local.aks_service_cidr, 10)
   }
 }
 
