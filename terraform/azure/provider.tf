@@ -17,8 +17,6 @@ terraform {
     container_name       = "terraform-state"
     key                  = "automate-all-the-things.tfstate"
     use_azuread_auth     = true
-    use_oidc             = true
-    use_msi              = true
   }
 }
 
@@ -27,7 +25,7 @@ terraform {
 # ----------------- Azure -----------------
 
 provider "azurerm" {
-  # subscription_id = "82459e9c-fe0b-4dc7-bcf1-29fac07afa4d"
+  subscription_id = var.subscription_id
   features {}
 }
 

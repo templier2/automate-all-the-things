@@ -7,6 +7,12 @@ permissions:
   id-token: write # This is required for requesting the JWT
   contents: read  # This is required for actions/checkout
 
+env:
+  ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  ARM_USE_OIDC: true
+
 jobs:
   deploy-infrastructure:
     runs-on: ubuntu-latest
@@ -29,10 +35,9 @@ jobs:
         terraform_version: "1.9.0"
 
     - name: Terraform init Backend
-      run: terraform init
+      run: terraform init -force-copy
       working-directory: terraform/azure
-      env:
-        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-        ARM_USE_OIDC: true
+
+    - name: Terraform apply actual infrastructure
+      run: terraform apply -auto-approve
+      working-directory: terraform/azure
