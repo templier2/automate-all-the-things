@@ -30,9 +30,11 @@ resource "azurerm_kubernetes_cluster" "automation" {
     type = "SystemAssigned"
   }
 
-  # network_profile {
-  #   network_plugin = "azure"
-  # }
+  network_profile {
+    network_plugin = "azure"
+    service_cidr   = cidrsubnet(one(azurerm_virtual_network.automation.address_space), 8, 1)
+    # dns_service_ip = cidrsubnet(one(azurerm_virtual_network.automation.address_space), 8, 1)
+  }
 }
 
 output "client_certificate" {

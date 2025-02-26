@@ -10,7 +10,7 @@ resource "azurerm_subnet" "internal_aks" {
   name                 = "private-aks-${var.username}"
   resource_group_name  = azurerm_resource_group.automation.name
   virtual_network_name = azurerm_virtual_network.automation.name
-  address_prefixes     = ["10.0.1.0/24"]
+  address_prefixes     = ["${cidrsubnet(one(azurerm_virtual_network.automation.address_space), 8, 0)}"]
 }
 
 resource "azurerm_network_security_group" "internal_aks" {
