@@ -7,4 +7,6 @@ az storage container create   --name terraform-state   --account-name automateth
 ToDo:
 - Write any automation script that customizes TF files (think about it a bit)
 - - default location is east us
-- PRICE: AKS+NAT was working for 5 hours
+- PRICE: AKS+NAT was working for 5 hours ~ $1,5
+- - AKS+NAT+3REDIS
+- customize k8s name within 01 deploy (and also think about run proper eks/aks cli)
