@@ -19,9 +19,9 @@ resource "azurerm_redis_cache" "automation" {
   }
 }
 
-output "redis" {
-  value = { for env, redis in azurerm_redis_cache.automation : env => redis.hostname }
-}
+# output "redis" {
+#   value = { for env, redis in azurerm_redis_cache.automation : env => redis.hostname }
+# }
 
 output "redis_dev" {
   value = azurerm_redis_cache.automation["dev"].hostname

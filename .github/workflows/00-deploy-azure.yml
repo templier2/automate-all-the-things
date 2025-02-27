@@ -49,3 +49,30 @@ jobs:
     #     inlineScript: |
     #       az account show
     #       az storage -h
+
+      # The terraform apply takes a long time so we run a git pull in case there have been any changes on the repo
+    - name: Update repo
+      run: git pull
+
+
+    - name: Save ElastiCache DBs endpoints
+      run: |
+        for env in dev stage prod; do
+          echo "$(terraform -chdir=terraform/azure output -raw redis_${env}):6379" > "elasticache_${env}_endpoint.txt"
+          cat "elasticache_${env}_endpoint.txt"
+        done
+        ls -la
+
+    # - name: Modify values for each environment
+    #   run: |
+    #     sed -i "s/redis_host:.*/redis_host: $(cat elasticache_dev_endpoint.txt | tr -d '\n')/g" helm/my-app/backend/environments/values-dev.yaml
+    #     sed -i "s/redis_host:.*/redis_host: $(cat elasticache_stage_endpoint.txt | tr -d '\n')/g" helm/my-app/backend/environments/values-stage.yaml
+    #     sed -i "s/redis_host:.*/redis_host: $(cat elasticache_prod_endpoint.txt | tr -d '\n')/g" helm/my-app/backend/environments/values-prod.yaml
+
+    # - name: Commit changes to GitHub
+    #   run: |
+    #     git config --global user.email "GitHubActions@DeployInfraWorkflow.com"
+    #     git config --global user.name "GitHub Actions - Deploy Infra Workflow"
+    #     git add helm/my-app/backend/environments/
+    #     git commit -m "ElastiCache endpoints updated in environments values.yaml files by GitHub Actions"
+    #     git push

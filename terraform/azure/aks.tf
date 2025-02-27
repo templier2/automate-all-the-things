@@ -11,8 +11,6 @@ resource "azurerm_kubernetes_cluster" "automation" {
   kubernetes_version        = "1.30"
   tags                      = var.tags
 
-  http_application_routing_enabled = true
-
   default_node_pool {
     name                 = "automation"
     node_count           = 2
@@ -58,43 +56,3 @@ output "kube_config" {
 
   sensitive = true
 }
-
-
-
-# -----
-# resource "azurerm_kubernetes_cluster_node_pool" "default" {
-#   name                = "default"
-#   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
-#   vm_size             = "Standard_DS2_v2"
-#   node_count          = 2
-#   min_count           = 1
-#   max_count           = 5
-#   enable_auto_scaling = true
-
-#   vnet_subnet_id      = azurerm_subnet.aks_subnet.id
-#   orchestrator_version = azurerm_kubernetes_cluster.aks.kubernetes_version
-# }
-
-# resource "azurerm_kubernetes_cluster" "aks" {
-#   name                = "aks-cluster"
-#   location            = azurerm_resource_group.rg.location
-#   resource_group_name = azurerm_resource_group.rg.name
-#   dns_prefix          = "akscluster"
-#   kubernetes_version  = "1.27.0"
-
-#   default_node_pool {
-#     name           = "nodepool1"
-#     vm_size        = "Standard_DS2_v2"
-#     node_count     = 2
-#     vnet_subnet_id = azurerm_subnet.aks_subnet.id
-#   }
-
-#   identity {
-#     type = "SystemAssigned"
-#   }
-
-#   network_profile {
-#     network_plugin    = "azure"
-#     load_balancer_sku = "standard"
-#   }
-# }
