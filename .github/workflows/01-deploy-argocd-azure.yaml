@@ -37,13 +37,14 @@ jobs:
           inlineScript: |
             az account set --subscription 82459e9c-fe0b-4dc7-bcf1-29fac07afa4d
             az aks get-credentials --resource-group automate-all-the-things-andrei --name automation-andrei --overwrite-existing
+            kubelogin convert-kubeconfig -l azurecli
 
       # - name: Configure kubeconfig
       #   run: aws eks --region $AWS_REGION update-kubeconfig --name $APP_NAME-cluster
 
       - name: Deploy ArgoCD
-        env:
-          KUBECONFIG: "/root/.kube/config"
+        # env:
+        #   KUBECONFIG: "/root/.kube/config"
         run: helm install argocd -n argocd helm/argo-cd --values helm/argo-cd/values-custom.yaml --dependency-update --create-namespace
 
       - name: Save ArgoCD credential
