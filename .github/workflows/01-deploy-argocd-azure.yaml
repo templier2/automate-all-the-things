@@ -37,6 +37,7 @@ jobs:
           inlineScript: |
             az account set --subscription 82459e9c-fe0b-4dc7-bcf1-29fac07afa4d
             az aks get-credentials --resource-group automate-all-the-things-andrei --name automation-andrei --overwrite-existing
+            export KUBECONFIG=/root/.kube/config
 
       # - name: Configure kubeconfig
       #   run: aws eks --region $AWS_REGION update-kubeconfig --name $APP_NAME-cluster
