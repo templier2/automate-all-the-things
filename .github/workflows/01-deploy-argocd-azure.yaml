@@ -17,6 +17,7 @@ env:
 jobs:
   deploy-argocd:
     runs-on: ubuntu-latest
+    environment: TEST
         
     steps:
       - name: Checkout code
