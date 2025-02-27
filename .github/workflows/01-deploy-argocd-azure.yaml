@@ -23,12 +23,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
       - name: Setup K8s environment
         uses: azure/cli@v2
         with:
           azcliversion: latest
           inlineScript: |
-            # az account set --subscription 82459e9c-fe0b-4dc7-bcf1-29fac07afa4d
+            az account set --subscription 82459e9c-fe0b-4dc7-bcf1-29fac07afa4d
             az aks get-credentials --resource-group automate-all-the-things-andrei --name automation-andrei --overwrite-existing
 
       # - name: Configure kubeconfig
