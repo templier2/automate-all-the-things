@@ -30,21 +30,18 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Setup K8s environment
-        uses: azure/cli@v2
+      - name: Set AKS context
+        id: set-context
+        uses: azure/aks-set-context@v3
         with:
-          azcliversion: latest
-          inlineScript: |
-            az account set --subscription 82459e9c-fe0b-4dc7-bcf1-29fac07afa4d
-            az aks get-credentials --resource-group automate-all-the-things-andrei --name automation-andrei --overwrite-existing
-            kubelogin convert-kubeconfig -l azurecli
+          resource-group: 'automate-all-the-things-andrei' 
+          cluster-name: 'automation-andrei'
 
-      # - name: Configure kubeconfig
-      #   run: aws eks --region $AWS_REGION update-kubeconfig --name $APP_NAME-cluster
+      - name: Setup kubectl
+        id: install-kubectl
+        uses: azure/setup-kubectl@v4
 
       - name: Deploy ArgoCD
-        # env:
-        #   KUBECONFIG: "/root/.kube/config"
         run: helm install argocd -n argocd helm/argo-cd --values helm/argo-cd/values-custom.yaml --dependency-update --create-namespace
 
       - name: Save ArgoCD credential
