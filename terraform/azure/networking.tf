@@ -19,13 +19,6 @@ resource "azurerm_subnet" "internal_aks" {
   address_prefixes     = ["${cidrsubnet(one(azurerm_virtual_network.automation.address_space), 8, 0)}"]
 }
 
-# resource "azurerm_subnet" "redis" {
-#   name                 = "private-redis-${var.username}"
-#   resource_group_name  = azurerm_resource_group.automation.name
-#   virtual_network_name = azurerm_virtual_network.automation.name
-#   address_prefixes     = ["${cidrsubnet(one(azurerm_virtual_network.automation.address_space), 8, 1)}"]
-# }
-
 resource "azurerm_network_security_group" "internal_aks" {
   name                = "private-automation-${var.username}"
   location            = azurerm_resource_group.automation.location
@@ -48,11 +41,6 @@ resource "azurerm_subnet_network_security_group_association" "internal_aks" {
   subnet_id                 = azurerm_subnet.internal_aks.id
   network_security_group_id = azurerm_network_security_group.internal_aks.id
 }
-
-# resource "azurerm_subnet_network_security_group_association" "redis" {
-#   subnet_id                 = azurerm_subnet.redis.id
-#   network_security_group_id = azurerm_network_security_group.internal_aks.id
-# }
 
 resource "azurerm_public_ip" "nat" {
   name                = "automation-nat-${var.username}"
@@ -80,4 +68,16 @@ resource "azurerm_nat_gateway_public_ip_association" "graphdb_nat_gateway" {
 resource "azurerm_subnet_nat_gateway_association" "graphdb_nat_gateway" {
   nat_gateway_id = azurerm_nat_gateway.automation.id
   subnet_id      = azurerm_subnet.internal_aks.id
+}
+
+resource "azurerm_subnet" "redis" {
+  name                 = "private-redis-${var.username}"
+  resource_group_name  = azurerm_resource_group.automation.name
+  virtual_network_name = azurerm_virtual_network.automation.name
+  address_prefixes     = ["${cidrsubnet(one(azurerm_virtual_network.automation.address_space), 8, 1)}"]
+}
+
+resource "azurerm_subnet_network_security_group_association" "redis" {
+  subnet_id                 = azurerm_subnet.redis.id
+  network_security_group_id = azurerm_network_security_group.internal_aks.id
 }
