@@ -28,7 +28,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az account set --subscription 82459e9c-fe0b-4dc7-bcf1-29fac07afa4d
+            # az account set --subscription 82459e9c-fe0b-4dc7-bcf1-29fac07afa4d
             az aks get-credentials --resource-group automate-all-the-things-andrei --name automation-andrei --overwrite-existing
 
       # - name: Configure kubeconfig
