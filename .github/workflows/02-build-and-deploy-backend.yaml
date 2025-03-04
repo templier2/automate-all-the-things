@@ -13,7 +13,7 @@ permissions:
   contents: write  # This is required for actions/checkout and actions/pull
 
 env:
-  APP_NAME: AATT_APP_NAME # This value was modified by the initial-setup python script
+  APP_NAME: andrei # This value was modified by the initial-setup python script
   SERVICE: backend
 
 jobs:
