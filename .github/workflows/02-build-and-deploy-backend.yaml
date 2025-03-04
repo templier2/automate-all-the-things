@@ -36,6 +36,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
+          file: my-app/backend
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.APP_NAME }}-${{ env.SERVICE }}:${{ github.run_number }}
 
