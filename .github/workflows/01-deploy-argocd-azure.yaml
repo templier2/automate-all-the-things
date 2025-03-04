@@ -42,7 +42,7 @@ jobs:
         uses: azure/setup-kubectl@v4
 
       - name: Deploy ArgoCD
-        run: helm uninstall argocd -n argocd && helm install argocd -n argocd helm/argo-cd --values helm/argo-cd/values-custom.yaml --dependency-update --create-namespace
+        run: helm install argocd -n argocd helm/argo-cd --values helm/argo-cd/values-custom.yaml --dependency-update --create-namespace
 
       - name: Save ArgoCD credential
         run: |
