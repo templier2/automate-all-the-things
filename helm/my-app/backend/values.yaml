@@ -1,5 +1,5 @@
-appName: AATT_APP_NAME-backend # This value was modified by the initial-setup python script
+appName: andrei-backend # This value was modified by the initial-setup python script
 
 deployment:
   image:
-    repository: templier2/AATT_APP_NAME-backend # This value was modified by the initial-setup python script
+    repository: templier2/andrei-backend # This value was modified by the initial-setup python script

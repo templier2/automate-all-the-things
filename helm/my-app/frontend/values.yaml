@@ -1,8 +1,8 @@
-appName: AATT_APP_NAME-frontend # This value was modified by the initial-setup python script
+appName: andrei-frontend # This value was modified by the initial-setup python script
 
 deployment:
   image:
-    repository: templier2/AATT_APP_NAME-frontend # This value was modified by the initial-setup python script
+    repository: templier2/andrei-frontend # This value was modified by the initial-setup python script
 
 configmap:
   images: |-
