@@ -8,5 +8,5 @@ ToDo:
 - Write any automation script that customizes TF files (think about it a bit)
 - - default location is east us
 - PRICE: AKS+NAT was working for 5 hours ~ $1,5
-- - AKS+NAT+3REDIS
+- - AKS+NAT+3REDIS for 6 hours ~ $2,7
 - customize k8s name within 01 deploy (and also think about run proper eks/aks cli)
