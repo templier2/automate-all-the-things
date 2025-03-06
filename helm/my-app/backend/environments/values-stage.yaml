@@ -5,4 +5,4 @@ deployment:
     tag: 7
   replicas: 1
   env:
-    redis_host: ::error::Terraform exited with code 1.
+    redis_host: # This value was modified by the deploy-infra pipeline

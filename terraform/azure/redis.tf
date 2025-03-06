@@ -14,9 +14,9 @@ resource "azurerm_redis_cache" "automation" {
   minimum_tls_version           = "1.2"
   tags                          = var.tags
   public_network_access_enabled = false
-#   subnet_id = azurerm_subnet.redis.id
+  #   subnet_id = azurerm_subnet.redis.id
   redis_configuration {
-    maxmemory_policy       = "allkeys-lru"
+    maxmemory_policy = "allkeys-lru"
     # authentication_enabled = false
   }
 }

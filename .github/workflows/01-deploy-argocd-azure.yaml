@@ -34,8 +34,8 @@ jobs:
         id: set-context
         uses: azure/aks-set-context@v3
         with:
-          resource-group: 'automate-all-the-things-andrei' 
-          cluster-name: 'automation-andrei'
+          resource-group: 'automate-all-the-things-AATT_APP_NAME' 
+          cluster-name: 'automation-AATT_APP_NAME'
 
       - name: Setup kubectl
         id: install-kubectl
